@@ -1,0 +1,254 @@
+{
+    "name": "GameInputs",
+    "maps": [
+        {
+            "name": "Inputs",
+            "id": "2e7e56d3-f716-4439-bf06-23ddf3004e86",
+            "actions": [
+                {
+                    "name": "Alien1Hunger",
+                    "type": "Button",
+                    "id": "477df849-4846-4369-89be-3c696ee8f7b0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien1Fun",
+                    "type": "Button",
+                    "id": "601b3de5-722c-4806-825c-b0ee6acbab1c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien1Taser",
+                    "type": "Button",
+                    "id": "fc71aa42-7ffb-4ef8-a99d-a9dedb9feb09",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien2Fun",
+                    "type": "Button",
+                    "id": "14799203-ba85-49bc-a5aa-1b9817119ac3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien2Taser",
+                    "type": "Button",
+                    "id": "24cdeab6-1716-4935-8e9a-1cda1ad2cf76",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien2Health",
+                    "type": "Button",
+                    "id": "32e86da5-b7f6-4be4-9d88-fd53ae16534c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien3Health",
+                    "type": "Button",
+                    "id": "c7ce244b-3042-451a-896d-d9262c590c84",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien3Fun",
+                    "type": "Button",
+                    "id": "5de0e570-4937-438d-985f-6ba9e54aa7b2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien3Hunger",
+                    "type": "Button",
+                    "id": "59a4627e-1e41-472a-890d-0edc26776ec8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien4Health",
+                    "type": "Button",
+                    "id": "4e5c3f74-751c-467b-a28c-70de1e1c43a2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien4Taser",
+                    "type": "Button",
+                    "id": "ab08c873-3dbf-471c-9cbe-dbac58402ca8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alien4Hunger",
+                    "type": "Button",
+                    "id": "0b843e14-d8a0-490e-a9b1-7bee7881d980",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8d71def6-9280-4a1a-bc1b-2eb5852d2e15",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien1Hunger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a5c222f-890b-4a77-b2fc-d4b7d10e6041",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien1Fun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b3747cf-f796-4eca-b29d-7482ea567af1",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien1Taser",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b815a972-8f72-43d2-8e06-90b8dfed0eb5",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien2Fun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6783dbda-bb31-41ea-b2c0-761fd2d6be80",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien2Taser",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "73a3f772-8496-41f8-b304-29d377ce61ee",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien2Health",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4acbede1-02f9-4d52-8f2e-2dbffb1ac7c6",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien3Hunger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae0b6437-ebb5-4b7b-b1c5-8b2e65543c88",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien3Fun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "02897b44-4cac-433c-bb7f-4d43010a1b05",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien3Health",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d4d183cc-651c-4cc3-afb0-39537576d757",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien4Health",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b740542-b436-4a2b-969b-54208b584add",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien4Taser",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90f63aec-169a-4d19-89c8-a4fc192acd4b",
+                    "path": "<Keyboard>/comma",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alien4Hunger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
