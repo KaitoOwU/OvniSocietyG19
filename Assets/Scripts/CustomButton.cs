@@ -10,12 +10,13 @@ public class CustomButton : MonoBehaviour
     [SerializeField] ButtonType _type;
 
     private float _currentCooldown = 0f;
-    private Image _image;
+    private Image _image, _childIcon;
     private bool _isActive;
 
     private void Awake()
     {
-        _image = gameObject.GetComponent<Image>();
+        _image = GetComponent<Image>();
+        _childIcon = transform.GetChild(0).GetComponent<Image>();
     }
 
     private void Start()
@@ -47,6 +48,8 @@ public class CustomButton : MonoBehaviour
             if (_currentCooldown <= 0)
             {
                 _isActive = true;
+                _childIcon.transform.localPosition = new Vector3(0, 15.36f, 0);
+                _image.sprite = Resources.Load<Sprite>("Buttons/B1");
                 switch (_type)
                 {
                     case ButtonType.FOOD:
@@ -72,6 +75,8 @@ public class CustomButton : MonoBehaviour
             return;
 
         _image.DOColor(Color.grey, 0.2f);
+        _childIcon.transform.localPosition = Vector3.zero;
+        _image.sprite = Resources.Load<Sprite>("Buttons/B2");
         _currentCooldown = _cooldown;
         _isActive = false;
     }

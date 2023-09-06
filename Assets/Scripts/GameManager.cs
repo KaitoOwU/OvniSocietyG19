@@ -1,7 +1,7 @@
+using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,9 +10,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] Alien[] _aliens;
     [SerializeField] CustomButton[] _customButtons;
     [SerializeField] float _eventAppearDelayInSeconds;
+    [SerializeField] Image _heart, _heartFace;
 
     private float _currentEventDelay;
-
+    private float _appreciation;
+    private bool _alive = true;
 
     private void OnValidate()
     {
@@ -79,6 +81,10 @@ public class GameManager : MonoBehaviour
     #region GAME_EVENTS
     private void Update()
     {
+        _appreciation = Mathf.Clamp(_appreciation - Time.deltaTime * 5, 0f, 100f);
+        Debug.Log(_appreciation);
+
+
         _currentEventDelay -= Time.deltaTime;
         if(_currentEventDelay <= 0)
         {
@@ -88,10 +94,45 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    private void Start()
+    {
+        _appreciation = 100f;
+        StartCoroutine(HeartBeat());
+    }
+
     private void ActivateButton(int alienId, ButtonType type)
     {
         _aliens[alienId].ApplyStatus(type);
         _customButtons[(int)type].Use();
+    }
+
+    private IEnumerator HeartBeat()
+    {
+        while (_appreciation > 0)
+        {
+            switch (_appreciation)
+            {
+                case 0:
+                    _heartFace.sprite = Resources.Load<Sprite>("Visages/DeadFace");
+                    break;
+                case < 33:
+                    _heartFace.sprite = Resources.Load<Sprite>("Visages/SickFace");
+                    break;
+                case < 67:
+                    _heartFace.sprite = Resources.Load<Sprite>("Visages/NeutralFace");
+                    break;
+                default:
+                    _heartFace.sprite = Resources.Load<Sprite>("Visages/HappyFace");
+                    break;
+            }
+
+            float _beatSpeed = (_appreciation / 77f) + 0.1f;
+
+            DOTween.Kill(_heart.transform);
+
+            yield return _heart.transform.DOScale(1f, 0.1f).OnComplete(() => { _heart.transform.DOScale(1.3f, 0.5f); }).WaitForCompletion();
+            yield return new WaitForSecondsRealtime(_beatSpeed);
+        }
     }
 }
 
@@ -100,18 +141,21 @@ public enum AlienEventType
     HUNGRY,
     DEPRESSED,
     ANGRY,
-    SICK
+    SICK,
+    DEAD
 }
 
 public class AlienEvent
 {
     public AlienEventType Type { get; private set; }
     public int[] AlienInEvent { get; private set; }
+    public float Duration { get; set; }
 
     public AlienEvent(AlienEventType type, params int[] alienInEvent)
     {
         Type = type;
         AlienInEvent = alienInEvent;
+        Duration = 10f;
     }
 
 }
