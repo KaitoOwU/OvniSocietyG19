@@ -108,13 +108,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator HeartBeat()
     {
-        while (_appreciation > 0)
+        do
         {
             switch (_appreciation)
             {
-                case 0:
-                    _heartFace.sprite = Resources.Load<Sprite>("Visages/DeadFace");
-                    break;
                 case < 33:
                     _heartFace.sprite = Resources.Load<Sprite>("Visages/SickFace");
                     break;
@@ -122,7 +119,7 @@ public class GameManager : MonoBehaviour
                     _heartFace.sprite = Resources.Load<Sprite>("Visages/NeutralFace");
                     break;
                 default:
-                    _heartFace.sprite = Resources.Load<Sprite>("Visages/HappyFace");
+                    
                     break;
             }
 
@@ -132,7 +129,9 @@ public class GameManager : MonoBehaviour
 
             yield return _heart.transform.DOScale(1f, 0.1f).OnComplete(() => { _heart.transform.DOScale(1.3f, 0.5f); }).WaitForCompletion();
             yield return new WaitForSecondsRealtime(_beatSpeed);
-        }
+        } while (_appreciation > 0);
+
+        _heartFace.sprite = Resources.Load<Sprite>("Visages/DeadFace");
     }
 }
 
