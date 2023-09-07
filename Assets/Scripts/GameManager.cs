@@ -111,8 +111,11 @@ public class GameManager : MonoBehaviour
 
     private void ActivateButton(int alienId, ButtonType type)
     {
-        _aliens[alienId].ApplyStatus(type);
-        _customButtons[(int)type].Use();
+        if (_customButtons[(int)type].IsActive)
+        {
+            _customButtons[(int)type].Use();
+            _aliens[alienId].ApplyStatus(type);
+        }
     }
 
     private IEnumerator HeartBeat()
@@ -148,8 +151,8 @@ public enum AlienEventType
 {
     HUNGRY,
     DEPRESSED,
-    ANGRY,
     SICK,
+    ANGRY,
     DEAD
 }
 
