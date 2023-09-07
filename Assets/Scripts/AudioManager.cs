@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -9,7 +10,7 @@ public class AudioManager : MonoBehaviour
     private static AudioSource _audioSource;
     private void Start()
     {
-        _audioClips = Resources.LoadAll<AudioClip>("Audio");
+        _audioClips = Resources.LoadAll<AudioClip>("Audio").ToList();
         _audioSource = GetComponent<AudioSource>();
     }
 

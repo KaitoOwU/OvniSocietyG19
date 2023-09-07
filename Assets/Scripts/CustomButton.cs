@@ -13,6 +13,8 @@ public class CustomButton : MonoBehaviour
     private Image _image, _childIcon;
     private bool _isActive;
 
+    public bool IsActive { get => _isActive; }
+
     private void Awake()
     {
         _image = GetComponent<Image>();

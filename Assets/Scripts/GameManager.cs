@@ -10,11 +10,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] Alien[] _aliens;
     [SerializeField] CustomButton[] _customButtons;
     [SerializeField] float _eventAppearDelayInSeconds;
+    [SerializeField] float _appreciationDecreaseOverTimeSpeed;
     [SerializeField] Image _heart, _heartFace;
 
     private float _currentEventDelay;
     private float _appreciation;
-    private bool _alive = true;
+    
+    public int ActiveEventsAmount { get
+        {
+            int amount = 0;
+            foreach(var aliens in _aliens)
+            {
+                amount += aliens.CurrentEvents.Count;
+            }
+            return amount;
+        } }
 
     private void OnValidate()
     {
@@ -81,9 +91,8 @@ public class GameManager : MonoBehaviour
     #region GAME_EVENTS
     private void Update()
     {
-        _appreciation = Mathf.Clamp(_appreciation - Time.deltaTime * 5, 0f, 100f);
+        _appreciation -= Time.deltaTime * ActiveEventsAmount * _appreciationDecreaseOverTimeSpeed;
         Debug.Log(_appreciation);
-
 
         _currentEventDelay -= Time.deltaTime;
         if(_currentEventDelay <= 0)

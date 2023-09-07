@@ -4,38 +4,41 @@ using UnityEngine;
 
 public class Alien : MonoBehaviour
 {
-    Stack<AlienEvent> _currentEvent = new();
+    [SerializeField] public ButtonType _ignoreType;
+    Stack<AlienEvent> _currentEvents = new();
     SpriteRenderer _sprite;
+
+    public IReadOnlyCollection<AlienEvent> CurrentEvents { get => _currentEvents; }
 
     public int ID { get; set; }
 
     public void ApplyStatus(ButtonType type)
     {
-        if (_currentEvent.Count <= 0)
+        if (_currentEvents.Count <= 0)
             return;
 
         switch (type)
         {
-            case ButtonType.FOOD:
-                if(_currentEvent.Peek().Type == AlienEventType.HUNGRY)
+            case ButtonType.FOOD when _ignoreType != ButtonType.FOOD:
+                if(_currentEvents.Peek().Type == AlienEventType.HUNGRY)
                 {
                     ResolveStatus();
                 }
                 break;
-            case ButtonType.SANITY:
-                if (_currentEvent.Peek().Type == AlienEventType.DEPRESSED)
+            case ButtonType.SANITY when _ignoreType != ButtonType.SANITY:
+                if (_currentEvents.Peek().Type == AlienEventType.DEPRESSED)
                 {
                     ResolveStatus();
                 }
                 break;
-            case ButtonType.HEALTH:
-                if (_currentEvent.Peek().Type == AlienEventType.SICK)
+            case ButtonType.HEALTH when _ignoreType != ButtonType.HEALTH:
+                if (_currentEvents.Peek().Type == AlienEventType.SICK)
                 {
                     ResolveStatus();
                 }
                 break;
-            case ButtonType.TASER:
-                if (_currentEvent.Peek().Type == AlienEventType.ANGRY)
+            case ButtonType.TASER when _ignoreType != ButtonType.TASER:
+                if (_currentEvents.Peek().Type == AlienEventType.ANGRY)
                 {
                     ResolveStatus();
                 }
@@ -53,22 +56,22 @@ public class Alien : MonoBehaviour
         switch(Random.Range(0, 4))
         {
             case 0:
-                _currentEvent.Push(
+                _currentEvents.Push(
                     new AlienEvent(AlienEventType.HUNGRY, ID)
                     );
                 break;
             case 1:
-                _currentEvent.Push(
+                _currentEvents.Push(
                     new AlienEvent(AlienEventType.DEPRESSED, ID)
                     );
                 break;
             case 2:
-                _currentEvent.Push(
+                _currentEvents.Push(
                     new AlienEvent(AlienEventType.SICK, ID)
                     );
                 break;
             case 3:
-                _currentEvent.Push(
+                _currentEvents.Push(
                     new AlienEvent(AlienEventType.ANGRY, ID)
                     );
                 break;
@@ -80,12 +83,12 @@ public class Alien : MonoBehaviour
 
     private void PlayAlienAnimation()
     {
-        if(_currentEvent.Count <= 0)
+        if(_currentEvents.Count <= 0)
         {
             _sprite.DOColor(Color.white, 1.5f);
         }
 
-        switch (_currentEvent.Peek().Type)
+        switch (_currentEvents.Peek().Type)
         {
             case AlienEventType.HUNGRY:
                 _sprite.DOColor(Color.yellow, 1.5f);
@@ -104,7 +107,7 @@ public class Alien : MonoBehaviour
 
     private void ResolveStatus()
     {
-        _currentEvent.Pop();
+        _currentEvents.Pop();
         PlayAlienAnimation();
     }
 }
