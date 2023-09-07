@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Alien : MonoBehaviour
 {
-    [SerializeField] private ButtonType _ignoreType;
     [SerializeField] private string _animName;
 
     Animator _animator;
     Stack<AlienEvent> _currentEvents = new();
-    SpriteRenderer _sprite;
 
     public IReadOnlyCollection<AlienEvent> CurrentEvents { get => _currentEvents; }
 
@@ -85,10 +83,12 @@ public class Alien : MonoBehaviour
                         ResolveStatus();
                         if (Random.Range(0, 2) == 0 || RightNeighbour == null)
                         {
+                            LeftNeighbour.ClearStatus();
                             LeftNeighbour.ApplyGameEvent(AlienEventType.ANGRY);
                         }
                         else
                         {
+                            RightNeighbour.ClearStatus();
                             RightNeighbour.ApplyGameEvent(AlienEventType.ANGRY);
                         }
                         break;
@@ -118,7 +118,7 @@ public class Alien : MonoBehaviour
                 {
                     case ButtonType.FOOD:
                         ResolveStatus();
-                        int a = 0, b = 0;
+                        int a, b;
                         do
                         {
                             a = Random.Range(0, 4);
@@ -128,6 +128,7 @@ public class Alien : MonoBehaviour
                         GameManager.instance.Aliens[b].ApplyGameEvent(AlienEventType.SICK);
                         break;
                     case ButtonType.HEALTH:
+                            ResolveStatus();
                         break;
                 }
                 break;
@@ -149,7 +150,6 @@ public class Alien : MonoBehaviour
                                 ApplyGameEvent(AlienEventType.SICK);
                                 break;
                         }
-                        break;
                         break;
                     case ButtonType.TASER:
                         ResolveStatus();
@@ -234,9 +234,13 @@ public class Alien : MonoBehaviour
         }
     }
 
+    public void ClearStatus()
+    {
+        _currentEvents.Clear();
+    }
+
     private void Awake()
     {
-        _sprite = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
     }
 
@@ -254,7 +258,7 @@ public class Alien : MonoBehaviour
                     new AlienEvent(AlienEventType.BORED, ID)
                     );
                 break;
-            case 2:
+            case 2 when ID != 0:
                 _currentEvents.Push(
                     new AlienEvent(AlienEventType.SICK, ID)
                     );
@@ -308,6 +312,9 @@ public class Alien : MonoBehaviour
                 break;
             case AlienEventType.SICK:
                 _animator.Play(_animName + "SickAnim");
+                break;
+            default:
+                _animator.Play(_animName + "IdleAnim");
                 break;
         }
     }
