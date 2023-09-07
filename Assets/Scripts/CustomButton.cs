@@ -50,7 +50,7 @@ public class CustomButton : MonoBehaviour
             if (_currentCooldown <= 0)
             {
                 _isActive = true;
-                _childIcon.transform.localPosition = new Vector3(0, 15.36f, 0);
+                _childIcon.transform.localPosition = new Vector3(0, 38f, 0);
                 _image.sprite = Resources.Load<Sprite>("Buttons/B1");
                 
                 DOTween.Kill(_image);
@@ -73,7 +73,7 @@ public class CustomButton : MonoBehaviour
         }
     }
 
-    public void Use()
+    public void Use(float xPos)
     {
         if (!_isActive)
             return;
@@ -84,5 +84,20 @@ public class CustomButton : MonoBehaviour
         _image.sprite = Resources.Load<Sprite>("Buttons/B2");
         _currentCooldown = _cooldown;
         _isActive = false;
+
+        switch (_type)
+        {
+            case ButtonType.FOOD:
+                StartCoroutine(GameManager.instance.Food.PlayAnimation(xPos));
+                break;
+            case ButtonType.FUN:
+                break;
+            case ButtonType.HEALTH:
+                StartCoroutine(GameManager.instance.Medecine.PlayAnimation(xPos));
+                break;
+            case ButtonType.TASER:
+                StartCoroutine(GameManager.instance.Light.PlayAnimation(xPos));
+                break;
+        }
     }
 }

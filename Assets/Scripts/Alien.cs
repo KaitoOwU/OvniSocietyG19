@@ -1,38 +1,43 @@
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
+using Math = System.Math;
 
 public class Alien : MonoBehaviour
 {
     [SerializeField] private string _animName;
 
     Animator _animator;
-    Stack<AlienEvent> _currentEvents = new();
+    AlienEvent _currentEvent;
 
-    public IReadOnlyCollection<AlienEvent> CurrentEvents { get => _currentEvents; }
+    public AlienEvent CurrentEvent { get => _currentEvent; }
 
     public int ID { get; set; }
 
     public Alien RightNeighbour { get
         {
-            if (ID >= 3)
-                return null;
+            Alien value = GameManager.instance.Aliens[Math.Clamp(ID + 1, 0, 3)];
 
-            return GameManager.instance.Aliens[ID + 1];
+            if (value == this)
+                return null;
+            else
+                return value;
         } }
 
     public Alien LeftNeighbour { get
         {
-            if (ID <= 0)
-                return null;
+            Alien value = GameManager.instance.Aliens[Math.Clamp(ID - 1, 0, 3)];
 
-            return GameManager.instance.Aliens[ID - 1];
+            if (value == this)
+                return null;
+            else
+                return value;
         } }
 
     public void ApplyStatus(ButtonType type)
     {
         //EVENTS RESOLUTION !!!
-        if (_currentEvents.Count <= 0)
+        if (_currentEvent == null)
         {
             switch (type)
             {
@@ -46,7 +51,7 @@ public class Alien : MonoBehaviour
             return;
         }
 
-        switch (_currentEvents.Peek().Type)
+        switch (_currentEvent.Type)
         {
             case AlienEventType.HUNGRY:
                 switch (type)
@@ -161,25 +166,25 @@ public class Alien : MonoBehaviour
             case AlienEventType.FIGHTING:
                 if (type == ButtonType.TASER)
                 {
-                    GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[0]].ResolveStatus();
-                    GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[1]].ResolveStatus();
+                    GameManager.instance.Aliens[_currentEvent.AlienInEvent[0]].ResolveStatus();
+                    GameManager.instance.Aliens[_currentEvent.AlienInEvent[1]].ResolveStatus();
                 } else if(type == ButtonType.HEALTH)
                 {
-                    GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[0]].ResolveStatus();
-                    GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[1]].ResolveStatus();
+                    GameManager.instance.Aliens[_currentEvent.AlienInEvent[0]].ResolveStatus();
+                    GameManager.instance.Aliens[_currentEvent.AlienInEvent[1]].ResolveStatus();
                     switch (Random.Range(0, 4))
                     {
                         case 0:
-                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[0]].ApplyGameEvent(AlienEventType.HUNGRY);
-                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[1]].ApplyGameEvent(AlienEventType.HUNGRY);
+                            GameManager.instance.Aliens[_currentEvent.AlienInEvent[0]].ApplyGameEvent(AlienEventType.HUNGRY);
+                            GameManager.instance.Aliens[_currentEvent.AlienInEvent[1]].ApplyGameEvent(AlienEventType.HUNGRY);
                             break;
                         case 1:
-                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[0]].ApplyGameEvent(AlienEventType.SICK);
-                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[1]].ApplyGameEvent(AlienEventType.SICK);
+                            GameManager.instance.Aliens[_currentEvent.AlienInEvent[0]].ApplyGameEvent(AlienEventType.SICK);
+                            GameManager.instance.Aliens[_currentEvent.AlienInEvent[1]].ApplyGameEvent(AlienEventType.SICK);
                             break;
                         case 2:
-                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[0]].ApplyGameEvent(AlienEventType.BORED);
-                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[1]].ApplyGameEvent(AlienEventType.BORED);
+                            GameManager.instance.Aliens[_currentEvent.AlienInEvent[0]].ApplyGameEvent(AlienEventType.BORED);
+                            GameManager.instance.Aliens[_currentEvent.AlienInEvent[1]].ApplyGameEvent(AlienEventType.BORED);
                             break;
                     }
                 }
@@ -191,14 +196,14 @@ public class Alien : MonoBehaviour
 
     private void Update()
     {
-        if (_currentEvents.Count <= 0)
+        if (_currentEvent == null)
             return;
 
-        _currentEvents.Peek().Duration -= Time.deltaTime;
+        _currentEvent.Duration -= Time.deltaTime;
 
-        if(_currentEvents.Peek().Duration <= 0)
+        if(_currentEvent.Duration <= 0)
         {
-            switch (_currentEvents.Peek().Type)
+            switch (_currentEvent.Type)
             {
                 case AlienEventType.BORED:
                     ResolveStatus();
@@ -236,7 +241,7 @@ public class Alien : MonoBehaviour
 
     public void ClearStatus()
     {
-        _currentEvents.Clear();
+        _currentEvent = null;
     }
 
     private void Awake()
@@ -249,24 +254,17 @@ public class Alien : MonoBehaviour
         switch(Random.Range(0, 4))
         {
             case 0:
-                _currentEvents.Push(
-                    new AlienEvent(AlienEventType.HUNGRY, ID)
-                    );
+                _currentEvent =
+                    new AlienEvent(AlienEventType.HUNGRY, ID);
                 break;
             case 1:
-                _currentEvents.Push(
-                    new AlienEvent(AlienEventType.BORED, ID)
-                    );
+                _currentEvent = new AlienEvent(AlienEventType.BORED, ID);
                 break;
             case 2 when ID != 0:
-                _currentEvents.Push(
-                    new AlienEvent(AlienEventType.SICK, ID)
-                    );
+                _currentEvent = new AlienEvent(AlienEventType.SICK, ID);
                 break;
             case 3:
-                _currentEvents.Push(
-                    new AlienEvent(AlienEventType.ANGRY, ID)
-                    );
+                _currentEvent = new AlienEvent(AlienEventType.ANGRY, ID);
                 break;
 
         }
@@ -276,29 +274,25 @@ public class Alien : MonoBehaviour
 
     internal void ApplyGameEvent(AlienEventType type)
     {
-        _currentEvents.Push(
-            new AlienEvent(type, ID)
-            );
+        _currentEvent = new AlienEvent(type, ID);
         PlayAlienAnimation();
     }
 
     internal void ApplyGameEvent(AlienEventType type, params int[] id)
     {
-        _currentEvents.Push(
-            new AlienEvent(type, id)
-            );
+        _currentEvent = new AlienEvent(type, id);
         PlayAlienAnimation();
     }
 
     private void PlayAlienAnimation()
     {
-        if(_currentEvents.Count <= 0)
+        if(_currentEvent == null)
         {
             _animator.Play(_animName + "IdleAnim");
             return;
         }
 
-        switch (_currentEvents.Peek().Type)
+        switch (_currentEvent.Type)
         {
             case AlienEventType.HUNGRY:
                 _animator.Play(_animName + "HungryAnim");
@@ -321,7 +315,7 @@ public class Alien : MonoBehaviour
 
     private void ResolveStatus()
     {
-        _currentEvents.Pop();
+        _currentEvent = null;
         PlayAlienAnimation();
     }
 }
