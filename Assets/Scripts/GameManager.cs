@@ -1,20 +1,26 @@
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     private GameInputs _gameInputs;
     
     [SerializeField] Alien[] _aliens;
     [SerializeField] CustomButton[] _customButtons;
     [SerializeField] float _eventAppearDelayInSeconds;
     [SerializeField] float _appreciationDecreaseOverTimeSpeed;
-    [SerializeField] Image _heart, _heartFace;
+    [SerializeField] Image _greyHeart, _redHeart, _heartFace;
 
     private float _currentEventDelay;
     private float _appreciation;
+
+    public Alien[] Aliens { get => _aliens; }
     
     public int ActiveEventsAmount { get
         {
@@ -41,21 +47,22 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         _gameInputs = new();
     }
 
     #region INPUTS
     private void OnEnable()
     {
-        _gameInputs.Inputs.Alien1Fun.started += (ctx) => ActivateButton(0, ButtonType.SANITY);
+        _gameInputs.Inputs.Alien1Fun.started += (ctx) => ActivateButton(0, ButtonType.FUN);
         _gameInputs.Inputs.Alien1Hunger.started += (ctx) => ActivateButton(0, ButtonType.FOOD);
         _gameInputs.Inputs.Alien1Taser.started += (ctx) => ActivateButton(0, ButtonType.TASER);
 
-        _gameInputs.Inputs.Alien2Fun.started += (ctx) => ActivateButton(1, ButtonType.SANITY);
+        _gameInputs.Inputs.Alien2Fun.started += (ctx) => ActivateButton(1, ButtonType.FUN);
         _gameInputs.Inputs.Alien2Health.started += (ctx) => ActivateButton(1, ButtonType.HEALTH);
         _gameInputs.Inputs.Alien2Taser.started += (ctx) => ActivateButton(1, ButtonType.TASER);
 
-        _gameInputs.Inputs.Alien3Fun.started += (ctx) => ActivateButton(2, ButtonType.SANITY);
+        _gameInputs.Inputs.Alien3Fun.started += (ctx) => ActivateButton(2, ButtonType.FUN);
         _gameInputs.Inputs.Alien3Health.started += (ctx) => ActivateButton(2, ButtonType.HEALTH);
         _gameInputs.Inputs.Alien3Hunger.started += (ctx) => ActivateButton(2, ButtonType.FOOD);
 
@@ -68,15 +75,15 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        _gameInputs.Inputs.Alien1Fun.started -= (ctx) => ActivateButton(0, ButtonType.SANITY);
+        _gameInputs.Inputs.Alien1Fun.started -= (ctx) => ActivateButton(0, ButtonType.FUN);
         _gameInputs.Inputs.Alien1Hunger.started -= (ctx) => ActivateButton(0, ButtonType.FOOD);
         _gameInputs.Inputs.Alien1Taser.started -= (ctx) => ActivateButton(0, ButtonType.TASER);
 
-        _gameInputs.Inputs.Alien2Fun.started -= (ctx) => ActivateButton(1, ButtonType.SANITY);
+        _gameInputs.Inputs.Alien2Fun.started -= (ctx) => ActivateButton(1, ButtonType.FUN);
         _gameInputs.Inputs.Alien2Health.started -= (ctx) => ActivateButton(1, ButtonType.HEALTH);
         _gameInputs.Inputs.Alien2Taser.started -= (ctx) => ActivateButton(1, ButtonType.TASER);
 
-        _gameInputs.Inputs.Alien3Fun.started -= (ctx) => ActivateButton(2, ButtonType.SANITY);
+        _gameInputs.Inputs.Alien3Fun.started -= (ctx) => ActivateButton(2, ButtonType.FUN);
         _gameInputs.Inputs.Alien3Health.started -= (ctx) => ActivateButton(2, ButtonType.HEALTH);
         _gameInputs.Inputs.Alien3Hunger.started -= (ctx) => ActivateButton(2, ButtonType.FOOD);
 
@@ -88,11 +95,10 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region GAME_EVENTS
     private void Update()
     {
         _appreciation -= Time.deltaTime * ActiveEventsAmount * _appreciationDecreaseOverTimeSpeed;
-        Debug.Log(_appreciation);
+        _redHeart.fillAmount = _appreciation / 100f;
 
         _currentEventDelay -= Time.deltaTime;
         if(_currentEventDelay <= 0)
@@ -101,7 +107,6 @@ public class GameManager : MonoBehaviour
             _currentEventDelay = _eventAppearDelayInSeconds;
         }
     }
-    #endregion
 
     private void Start()
     {
@@ -130,16 +135,13 @@ public class GameManager : MonoBehaviour
                 case < 67:
                     _heartFace.sprite = Resources.Load<Sprite>("Visages/NeutralFace");
                     break;
-                default:
-                    
-                    break;
             }
 
             float _beatSpeed = (_appreciation / 77f) + 0.1f;
 
-            DOTween.Kill(_heart.transform);
+            DOTween.Kill(_greyHeart.transform);
 
-            yield return _heart.transform.DOScale(1f, 0.1f).OnComplete(() => { _heart.transform.DOScale(1.3f, 0.5f); }).WaitForCompletion();
+            yield return _greyHeart.transform.DOScale(1f, 0.1f).OnComplete(() => { _greyHeart.transform.DOScale(1.3f, 0.5f); }).WaitForCompletion();
             yield return new WaitForSecondsRealtime(_beatSpeed);
         } while (_appreciation > 0);
 
@@ -150,10 +152,11 @@ public class GameManager : MonoBehaviour
 public enum AlienEventType
 {
     HUNGRY,
-    DEPRESSED,
+    BORED,
     SICK,
     ANGRY,
-    DEAD
+    FIGHTING,
+    DISTRACTED
 }
 
 public class AlienEvent
@@ -174,7 +177,7 @@ public class AlienEvent
 public enum ButtonType
 {
     FOOD,
-    SANITY,
+    FUN,
     HEALTH,
     TASER
 }

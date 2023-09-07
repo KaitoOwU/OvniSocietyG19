@@ -30,7 +30,7 @@ public class CustomButton : MonoBehaviour
             case ButtonType.FOOD:
                 _image.color = Color.yellow;
                 break;
-            case ButtonType.SANITY:
+            case ButtonType.FUN:
                 _image.color = Color.blue;
                 break;
             case ButtonType.HEALTH:
@@ -52,12 +52,14 @@ public class CustomButton : MonoBehaviour
                 _isActive = true;
                 _childIcon.transform.localPosition = new Vector3(0, 15.36f, 0);
                 _image.sprite = Resources.Load<Sprite>("Buttons/B1");
+                
+                DOTween.Kill(_image);
                 switch (_type)
                 {
                     case ButtonType.FOOD:
                         _image.DOColor(Color.yellow, 1f);
                         break;
-                    case ButtonType.SANITY:
+                    case ButtonType.FUN:
                         _image.DOColor(Color.blue, 1f);
                         break;
                     case ButtonType.HEALTH:
@@ -76,6 +78,7 @@ public class CustomButton : MonoBehaviour
         if (!_isActive)
             return;
 
+        DOTween.Kill(_image);
         _image.DOColor(Color.grey, 0.2f);
         _childIcon.transform.localPosition = Vector3.zero;
         _image.sprite = Resources.Load<Sprite>("Buttons/B2");

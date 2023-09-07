@@ -4,13 +4,32 @@ using UnityEngine;
 
 public class Alien : MonoBehaviour
 {
-    [SerializeField] public ButtonType _ignoreType;
+    [SerializeField] private ButtonType _ignoreType;
+    [SerializeField] private string _animName;
+
+    Animator _animator;
     Stack<AlienEvent> _currentEvents = new();
     SpriteRenderer _sprite;
 
     public IReadOnlyCollection<AlienEvent> CurrentEvents { get => _currentEvents; }
 
     public int ID { get; set; }
+
+    public Alien RightNeighbour { get
+        {
+            if (ID >= 3)
+                return null;
+
+            return GameManager.instance.Aliens[ID + 1];
+        } }
+
+    public Alien LeftNeighbour { get
+        {
+            if (ID <= 0)
+                return null;
+
+            return GameManager.instance.Aliens[ID - 1];
+        } }
 
     public void ApplyStatus(ButtonType type)
     {
@@ -29,42 +48,196 @@ public class Alien : MonoBehaviour
             return;
         }
 
-        switch (type)
+        switch (_currentEvents.Peek().Type)
         {
-            case ButtonType.FOOD:
-                if(_currentEvents.Peek().Type == AlienEventType.HUNGRY)
+            case AlienEventType.HUNGRY:
+                switch (type)
                 {
-                    ResolveStatus();
+                    case ButtonType.FOOD:
+                        ResolveStatus();
+                        break;
+                    case ButtonType.FUN:
+                        ResolveStatus();
+                        ApplyGameEvent(AlienEventType.DISTRACTED);
+                        break;
+                    case ButtonType.HEALTH:
+                        ResolveStatus();
+                        switch (Random.Range(0, 4))
+                        {
+                            case 0:
+                                ApplyGameEvent(AlienEventType.BORED);
+                                break;
+                            case 1:
+                                ApplyGameEvent(AlienEventType.ANGRY);
+                                break;
+                            case 2:
+                                ApplyGameEvent(AlienEventType.SICK);
+                                break;
+                        }
+                        break;
                 }
                 break;
-            case ButtonType.SANITY:
-                if (_currentEvents.Peek().Type == AlienEventType.DEPRESSED)
+            case AlienEventType.BORED:
+
+                switch (type)
                 {
-                    ResolveStatus();
+                    case ButtonType.FOOD:
+                        ResolveStatus();
+                        if (Random.Range(0, 2) == 0 || RightNeighbour == null)
+                        {
+                            LeftNeighbour.ApplyGameEvent(AlienEventType.ANGRY);
+                        }
+                        else
+                        {
+                            RightNeighbour.ApplyGameEvent(AlienEventType.ANGRY);
+                        }
+                        break;
+                    case ButtonType.FUN:
+                        ResolveStatus();
+                        break;
+                    case ButtonType.HEALTH:
+                        ResolveStatus();
+                        switch (Random.Range(0, 4))
+                        {
+                            case 0:
+                                ApplyGameEvent(AlienEventType.HUNGRY);
+                                break;
+                            case 1:
+                                ApplyGameEvent(AlienEventType.ANGRY);
+                                break;
+                            case 2:
+                                ApplyGameEvent(AlienEventType.SICK);
+                                break;
+                        }
+                        break;
+                }
+
+                break;
+            case AlienEventType.SICK:
+                switch (type)
+                {
+                    case ButtonType.FOOD:
+                        ResolveStatus();
+                        int a = 0, b = 0;
+                        do
+                        {
+                            a = Random.Range(0, 4);
+                            b = Random.Range(0, 4);
+                        } while (a == b || a == ID || b == ID);
+                        GameManager.instance.Aliens[a].ApplyGameEvent(AlienEventType.SICK);
+                        GameManager.instance.Aliens[b].ApplyGameEvent(AlienEventType.SICK);
+                        break;
+                    case ButtonType.HEALTH:
+                        break;
                 }
                 break;
-            case ButtonType.HEALTH:
-                if (_currentEvents.Peek().Type == AlienEventType.SICK)
+            case AlienEventType.ANGRY:
+
+                switch (type)
                 {
-                    ResolveStatus();
-                } else if(_currentEvents.Peek().Type is AlienEventType.ANGRY or AlienEventType.DEPRESSED or AlienEventType.HUNGRY)
+                    case ButtonType.HEALTH:
+                        ResolveStatus();
+                        switch (Random.Range(0, 4))
+                        {
+                            case 0:
+                                ApplyGameEvent(AlienEventType.HUNGRY);
+                                break;
+                            case 1:
+                                ApplyGameEvent(AlienEventType.BORED);
+                                break;
+                            case 2:
+                                ApplyGameEvent(AlienEventType.SICK);
+                                break;
+                        }
+                        break;
+                        break;
+                    case ButtonType.TASER:
+                        ResolveStatus();
+                        break;
+                }
+
+                break;
+
+            case AlienEventType.FIGHTING:
+                if (type == ButtonType.TASER)
                 {
-                    ResolveStatus();
-                    ApplyGameEvent((AlienEventType)Random.Range(0, 2));
+                    GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[0]].ResolveStatus();
+                    GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[1]].ResolveStatus();
+                } else if(type == ButtonType.HEALTH)
+                {
+                    GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[0]].ResolveStatus();
+                    GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[1]].ResolveStatus();
+                    switch (Random.Range(0, 4))
+                    {
+                        case 0:
+                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[0]].ApplyGameEvent(AlienEventType.HUNGRY);
+                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[1]].ApplyGameEvent(AlienEventType.HUNGRY);
+                            break;
+                        case 1:
+                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[0]].ApplyGameEvent(AlienEventType.SICK);
+                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[1]].ApplyGameEvent(AlienEventType.SICK);
+                            break;
+                        case 2:
+                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[0]].ApplyGameEvent(AlienEventType.BORED);
+                            GameManager.instance.Aliens[_currentEvents.Peek().AlienInEvent[1]].ApplyGameEvent(AlienEventType.BORED);
+                            break;
+                    }
                 }
                 break;
-            case ButtonType.TASER:
-                if (_currentEvents.Peek().Type == AlienEventType.ANGRY)
-                {
+        }
+
+
+    }
+
+    private void Update()
+    {
+        if (_currentEvents.Count <= 0)
+            return;
+
+        _currentEvents.Peek().Duration -= Time.deltaTime;
+
+        if(_currentEvents.Peek().Duration <= 0)
+        {
+            switch (_currentEvents.Peek().Type)
+            {
+                case AlienEventType.BORED:
                     ResolveStatus();
-                }
-                break;
+                    if (Random.Range(0, 2) == 0 || RightNeighbour == null)
+                    {
+                        ApplyGameEvent(AlienEventType.FIGHTING, ID, LeftNeighbour.ID);
+                        LeftNeighbour.ApplyGameEvent(AlienEventType.FIGHTING);
+                    }
+                    else
+                    {
+                        ApplyGameEvent(AlienEventType.FIGHTING, ID, RightNeighbour.ID);
+                        RightNeighbour.ApplyGameEvent(AlienEventType.FIGHTING, ID, RightNeighbour.ID);
+                    }
+                    break;
+                case AlienEventType.SICK:
+                    int a = 0;
+                    do
+                    {
+                        a = Random.Range(0, 4);
+                    } while (a == ID);
+                    GameManager.instance.Aliens[a].ApplyGameEvent(AlienEventType.SICK);
+                    break;
+                case AlienEventType.DISTRACTED:
+                    if(Random.Range(0, 2) == 1)
+                    {
+                        ResolveStatus();
+                        ApplyGameEvent(AlienEventType.SICK);
+                    }
+                    break;
+                case AlienEventType.ANGRY:
+                    break;
+            }
         }
     }
 
     private void Awake()
     {
         _sprite = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     internal void ApplyGameEvent()
@@ -78,7 +251,7 @@ public class Alien : MonoBehaviour
                 break;
             case 1:
                 _currentEvents.Push(
-                    new AlienEvent(AlienEventType.DEPRESSED, ID)
+                    new AlienEvent(AlienEventType.BORED, ID)
                     );
                 break;
             case 2:
@@ -105,27 +278,36 @@ public class Alien : MonoBehaviour
         PlayAlienAnimation();
     }
 
+    internal void ApplyGameEvent(AlienEventType type, params int[] id)
+    {
+        _currentEvents.Push(
+            new AlienEvent(type, id)
+            );
+        PlayAlienAnimation();
+    }
+
     private void PlayAlienAnimation()
     {
         if(_currentEvents.Count <= 0)
         {
-            _sprite.DOColor(Color.white, 1.5f);
+            _animator.Play(_animName + "IdleAnim");
             return;
         }
 
         switch (_currentEvents.Peek().Type)
         {
             case AlienEventType.HUNGRY:
-                _sprite.DOColor(Color.yellow, 1.5f);
+                _animator.Play(_animName + "HungryAnim");
                 break;
-            case AlienEventType.DEPRESSED:
-                _sprite.DOColor(Color.blue, 1.5f);
+            case AlienEventType.BORED:
+                _animator.Play(_animName + "BoredAnim");
                 break;
             case AlienEventType.ANGRY:
-                _sprite.DOColor(Color.red, 1.5f);
+            case AlienEventType.FIGHTING:
+                _animator.Play(_animName + "AngryAnim");
                 break;
             case AlienEventType.SICK:
-                _sprite.DOColor(Color.green, 1.5f);
+                _animator.Play(_animName + "SickAnim");
                 break;
         }
     }
