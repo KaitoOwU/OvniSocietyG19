@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6399df9f-8e53-428c-b919-32a22ab1eeba" name="Changes" comment="" />
+    <list default="true" id="6399df9f-8e53-428c-b919-32a22ab1eeba" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OvniSocietyG19/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OvniSocietyG19/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Audio/VE_alien-cackle.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Audio/VE_alien-cackle.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -91,6 +98,12 @@
       <workItem from="1693984485502" duration="736000" />
       <workItem from="1694005679906" duration="187000" />
       <workItem from="1694010175668" duration="1966000" />
+      <workItem from="1694070822631" duration="629000" />
+      <workItem from="1694072764956" duration="483000" />
+      <workItem from="1694073280366" duration="8000" />
+      <workItem from="1694073306783" duration="24000" />
+      <workItem from="1694073348750" duration="939000" />
+      <workItem from="1694074945631" duration="3414000" />
     </task>
     <servers />
   </component>
