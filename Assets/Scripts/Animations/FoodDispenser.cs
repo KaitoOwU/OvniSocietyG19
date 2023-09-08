@@ -21,6 +21,7 @@ public class FoodDispenser : MonoBehaviour
 
         _banana.gameObject.SetActive(false);
         yield return transform.DOMoveY(6f, 1f).WaitForCompletion();
+        CustomButton.isAnimationAlreadyPlaying = false;
     }
 
 }

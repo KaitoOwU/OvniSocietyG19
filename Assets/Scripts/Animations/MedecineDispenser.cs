@@ -21,5 +21,6 @@ public class MedecineDispenser : MonoBehaviour
 
         _medecine.gameObject.SetActive(false);
         yield return transform.DOMoveY(6.45f, 1f).WaitForCompletion();
+        CustomButton.isAnimationAlreadyPlaying = false;
     }
 }

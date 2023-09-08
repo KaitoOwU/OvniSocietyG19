@@ -22,10 +22,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] FoodDispenser _food;
     [SerializeField] MedecineDispenser _medecine;
     [SerializeField] Lightning _lightning;
+    [SerializeField] Speaker _speaker;
 
     public FoodDispenser Food { get => _food; }
     public MedecineDispenser Medecine { get => _medecine; }
     public Lightning Light { get => _lightning; }
+    public Speaker Speaker { get => _speaker; }
 
     private float _currentEventDelay;
     private float _appreciation;
@@ -123,6 +125,7 @@ public class GameManager : MonoBehaviour
         GameDuration += Time.deltaTime * 5f;
         _appreciation -= Time.deltaTime * ActiveEventsAmount * _appreciationDecreaseOverTimeSpeed;
         _redHeart.fillAmount = _appreciation / 100f;
+        _eventAppearDelayInSeconds = Mathf.Clamp(_eventAppearDelayInSeconds - Time.deltaTime / 15f, 12.5f, 5f);
 
         _currentEventDelay -= Time.deltaTime;
         if(_currentEventDelay <= 0)
@@ -146,9 +149,14 @@ public class GameManager : MonoBehaviour
         StartCoroutine(HeartBeat());
     }
 
+    public void PlayFunnySound()
+    {
+        _greyHeart.GetComponent<AudioSource>().Play();
+    }
+
     private void ActivateButton(int alienId, ButtonType type)
     {
-        if (_customButtons[(int)type].IsActive)
+        if (_customButtons[(int)type].IsActive && !CustomButton.isAnimationAlreadyPlaying)
         {
             _customButtons[(int)type].Use(_aliens[alienId].transform.position.x);
             _aliens[alienId].ApplyStatus(type);
@@ -179,6 +187,12 @@ public class GameManager : MonoBehaviour
 
         _heartFace.sprite = Resources.Load<Sprite>("Visages/DeadFace");
     }
+
+    public void HeartAnimation()
+    {
+        _redHeart.DOColor(Color.green, 0f);
+        _redHeart.DOColor(Color.red, 1f);
+    }
 }
 
 public enum AlienEventType
@@ -187,7 +201,6 @@ public enum AlienEventType
     BORED,
     SICK,
     ANGRY,
-    FIGHTING,
     DISTRACTED
 }
 
@@ -197,11 +210,14 @@ public class AlienEvent
     public int[] AlienInEvent { get; private set; }
     public float Duration { get; set; }
 
-    public AlienEvent(AlienEventType type, params int[] alienInEvent)
+    public AlienEvent(AlienEventType type, float duration, params int[] alienInEvent)
     {
         Type = type;
         AlienInEvent = alienInEvent;
-        Duration = 10f;
+        Duration = duration;
+
+        if (type == AlienEventType.SICK)
+            Duration = 20f;
     }
 
 }

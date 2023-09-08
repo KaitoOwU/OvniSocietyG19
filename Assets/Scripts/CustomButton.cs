@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class CustomButton : MonoBehaviour
 {
+    public static bool isAnimationAlreadyPlaying = false;
+
     [SerializeField] private float _cooldown;
     [SerializeField] ButtonType _type;
 
@@ -79,18 +81,21 @@ public class CustomButton : MonoBehaviour
             return;
 
         DOTween.Kill(_image);
+        GetComponent<AudioSource>().Play();
         _image.DOColor(Color.grey, 0.2f);
         _childIcon.transform.localPosition = Vector3.zero;
         _image.sprite = Resources.Load<Sprite>("Buttons/B2");
         _currentCooldown = _cooldown;
         _isActive = false;
 
+        isAnimationAlreadyPlaying = true;
         switch (_type)
         {
             case ButtonType.FOOD:
                 StartCoroutine(GameManager.instance.Food.PlayAnimation(xPos));
                 break;
             case ButtonType.FUN:
+                StartCoroutine(GameManager.instance.Speaker.PlayAnimation(xPos));
                 break;
             case ButtonType.HEALTH:
                 StartCoroutine(GameManager.instance.Medecine.PlayAnimation(xPos));
