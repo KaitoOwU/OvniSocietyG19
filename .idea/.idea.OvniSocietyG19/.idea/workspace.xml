@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6399df9f-8e53-428c-b919-32a22ab1eeba" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OvniSocietyG19/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OvniSocietyG19/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Audio/VE_alien-cackle.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Audio/VE_alien-cackle.mp3.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AudioManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu principal Adrien.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu principal Adrien.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,6 +100,9 @@
       <workItem from="1694073306783" duration="24000" />
       <workItem from="1694073348750" duration="939000" />
       <workItem from="1694074945631" duration="3414000" />
+      <workItem from="1694157194336" duration="102000" />
+      <workItem from="1694162340690" duration="183000" />
+      <workItem from="1694162547898" duration="619000" />
     </task>
     <servers />
   </component>

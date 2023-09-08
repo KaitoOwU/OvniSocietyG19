@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Audio/SD_Taser_1.mp3.meta
+guid: 89f7c2ba992ae5d44a6607a9edd60437
+========
+guid: b4a50de7070dc0147a1280681936efba
+>>>>>>>> cd7d8436bf859f828786e19ed8948da4b0c683be:Assets/Resources/Audio/Dragonforce - Through The Fire And Flames (8 Bit).mp3.meta
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 7
+  defaultSettings:
+    serializedVersion: 2
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+    preloadAudioData: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

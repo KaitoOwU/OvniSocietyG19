@@ -312,9 +312,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 507793823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17b79312a88921f4bab53018392a1e0d, type: 3}
+  m_Script: {fileID: 11500000, guid: c9c0a75e314502e4bac28b8103c5c977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tempsClignotement: 0.7
 --- !u!1 &1144676442
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,6 +464,7 @@ GameObject:
   - component: {fileID: 1437897556}
   - component: {fileID: 1437897558}
   - component: {fileID: 1437897557}
+  - component: {fileID: 1437897559}
   m_Layer: 5
   m_Name: TITRE
   m_TagString: Untagged
@@ -527,6 +529,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437897555}
   m_CullTransparentMesh: 1
+--- !u!114 &1437897559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437897555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b79312a88921f4bab53018392a1e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1492886186
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +598,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 899f9925ec2989746aa5beeb38f107b7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eab991e3a0ae1f747bb3c8ace1c0073b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
