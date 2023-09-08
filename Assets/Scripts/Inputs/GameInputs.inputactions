@@ -117,34 +117,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "8d71def6-9280-4a1a-bc1b-2eb5852d2e15",
-                    "path": "<Keyboard>/z",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien1Hunger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "208eb7e3-1766-4be6-8e4b-2e8c4be3b7a7",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Alien1Hunger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6a5c222f-890b-4a77-b2fc-d4b7d10e6041",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien1Fun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -161,34 +139,12 @@
                 },
                 {
                     "name": "",
-                    "id": "2b3747cf-f796-4eca-b29d-7482ea567af1",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien1Taser",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "14c43d77-ebc3-4edd-a32b-b6cac2c78f8d",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Alien1Taser",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b815a972-8f72-43d2-8e06-90b8dfed0eb5",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien2Fun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -205,34 +161,12 @@
                 },
                 {
                     "name": "",
-                    "id": "6783dbda-bb31-41ea-b2c0-761fd2d6be80",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien2Taser",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "158ea95a-e2c8-4d5b-8528-867d73a26493",
                     "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Alien2Taser",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "73a3f772-8496-41f8-b304-29d377ce61ee",
-                    "path": "<Keyboard>/v",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien2Health",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -249,34 +183,12 @@
                 },
                 {
                     "name": "",
-                    "id": "4acbede1-02f9-4d52-8f2e-2dbffb1ac7c6",
-                    "path": "<Keyboard>/n",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien3Hunger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a0b9116e-c022-4ec5-b22b-f1ccdc00449d",
                     "path": "<Keyboard>/o",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Alien3Hunger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ae0b6437-ebb5-4b7b-b1c5-8b2e65543c88",
-                    "path": "<Keyboard>/h",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien3Fun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -293,17 +205,6 @@
                 },
                 {
                     "name": "",
-                    "id": "02897b44-4cac-433c-bb7f-4d43010a1b05",
-                    "path": "<Keyboard>/b",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien3Health",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9f5a14ff-b45c-4ce2-afb2-909cb6e4b4e2",
                     "path": "<Keyboard>/i",
                     "interactions": "",
@@ -315,41 +216,19 @@
                 },
                 {
                     "name": "",
-                    "id": "d4d183cc-651c-4cc3-afb0-39537576d757",
-                    "path": "<Keyboard>/m",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien4Health",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "b1bc84fa-02cc-44a6-adb3-678a39d4048e",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Alien4Health",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0b740542-b436-4a2b-969b-54208b584add",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien4Taser",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "d6cf2052-6651-4336-b3c5-5926b92ce966",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -359,19 +238,8 @@
                 },
                 {
                     "name": "",
-                    "id": "90f63aec-169a-4d19-89c8-a4fc192acd4b",
-                    "path": "<Keyboard>/comma",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alien4Hunger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "84aa9690-3102-4f04-b53e-e252313b523b",
-                    "path": "<Keyboard>/p",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
